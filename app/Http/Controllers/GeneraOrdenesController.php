@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\GeneraOrdenes;
+use App\Models\OrdenesDocumentoBanco;
 use App\Imports\OrdenesImport;
 use App\Exports\OrdenesExport;
 use App\Exports\PensionesExport;
@@ -50,6 +51,8 @@ class GeneraOrdenesController extends Controller
      */
     public function index(Request $rq)
     {
+
+           // dd(bcrypt('ellanoteama'));
         DB::statement("SET lc_time TO 'es_ES';");
         $periodos=DB::select("SELECT * FROM aniolectivo where anl_selected=1 order by id");
         $jornadas=DB::select("SELECT * FROM jornadas WHERE (id=1 or id=3)");
@@ -110,6 +113,7 @@ class GeneraOrdenesController extends Controller
       $ordenes =$this->ordenes_generadas_por_secuencial($sec);
       return view('generaOrdenes.show')
       ->with('ordenes',$ordenes)
+      ->with('sec',$sec)
       ;    
     }
 
@@ -365,11 +369,30 @@ class GeneraOrdenesController extends Controller
 
     public function upload_show($sec){
 
-        $documentos=DB::select("SELECT * FROM ordenes_documento_banco ");
+        $documentos=DB::select("SELECT * FROM ordenes_documento_banco WHERE secuencial_documento=$sec");
         return view('generaOrdenes.upload_show')
         ->with('documentos',$documentos);
-
     }
+
+    public function delete($sec){
+
+    OrdenesDocumentoBanco::where('secuencial_documento', $sec)->delete();
+    $documentos=DB::select("SELECT 
+        nombre_documento,
+        fecha_registro,
+        responsable,
+        secuencial_documento
+        FROM ordenes_documento_banco
+        group by
+        nombre_documento,
+        fecha_registro,
+        responsable,
+        secuencial_documento ");
+
+        return view("generaOrdenes.upload")
+        ->with('documentos',$documentos)
+        ;
+}
 
 
     public function report(Request $rq){
@@ -490,6 +513,30 @@ class GeneraOrdenesController extends Controller
 
         return $rst;
 
+    }
+    public function buscar_estudiante_orden(Request $rq) {
+        
+        // Realiza la consulta utilizando el valor de $dato
+        $dato=($rq->all());
+        $sec=$dato['secuencial'];
+        $buscar=$dato['buscar'];
+$estudiantes = DB::select("SELECT * 
+                                FROM ordenes_generadas o
+                                JOIN matriculas m ON m.id = o.mat_id
+                                JOIN estudiantes e ON e.id = m.est_id
+                                JOIN especialidades esp ON esp.id = m.esp_id
+                                JOIN cursos cur ON cur.id = m.cur_id
+                                JOIN jornadas jor ON jor.id=m.jor_id
+                                WHERE (UPPER(e.est_nombres) LIKE UPPER('%$buscar%') OR
+                                     UPPER(e.est_apellidos) LIKE UPPER('%$buscar%') OR
+                                     UPPER(e.est_cedula) LIKE UPPER('%$buscar%')) 
+                                     AND secuencial=$sec
+                                order by e.est_apellidos");
+        // Pasa los resultados de la consulta y $dato a la vista
+        return view('generaOrdenes.buscar')
+            ->with('estudiantes', $estudiantes)
+            ->with('sec', $sec)
+            ;
     }
 
     

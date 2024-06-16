@@ -12,7 +12,7 @@ function validar() {
 }
 
 </script>
-<div class="container">
+<div class="container ">
       <div class="text-center bg-success text-white">SUBIR ARCHIVOS DESDE EL CASH</div>
         <br>
       <div class="file_container border border-success rounded p-3 mt-3" style="width:50%" >
@@ -51,10 +51,19 @@ function validar() {
                <td>{{ $documento->responsable }}</td>
                <td>{{ $documento->secuencial_documento }}</td>
                <td>
-                  <div class="btn-group">
-                     <a href="{{ route('genera_ordenes.upload_show',$documento->secuencial_documento) }}" class="btn btn-default btn-xs "><i class="fa fa-eye"></i></a>
-                  </div> 
-               </td>
+                <div class="btn-group">
+                   <a href="{{ route('genera_ordenes.upload_show',$documento->secuencial_documento) }}" class="btn btn-default btn-xs">
+                    <span class="material-symbols-outlined">
+                        visibility
+                        </span>                   </a>
+                   <a href="{{ route('genera_ordenes.delete',$documento->secuencial_documento) }}" class="btn btn-default btn-xs">
+                    <span class="material-symbols-outlined">
+                        delete
+                        </span>
+                   </a>
+                </div>
+             </td>
+             
            </tr>
        @endforeach
    </tbody>

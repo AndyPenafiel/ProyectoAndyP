@@ -1,11 +1,23 @@
 @extends('layouts.app')
 @section('content')
 
-
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <form class="form-inline my-2 my-lg-0 " action="{{ route('buscar_estudiante_orden')}}">
+        <input class="form-control mr-sm-2" type="search" placeholder="Apellidos/Cedula" aria-label="Search" name="buscar">
+        <button class="btn btn-success btn-sm" type="submit" style="height: 35px; line-height: 1.2;">
+            <span class="material-symbols-outlined">
+                search
+                </span>
+        </button>
+        <input type="hidden" name="secuencial" value="{{$sec}}">
+    </form>
+</div>
+<br>
 <div class="container-fluid">
      <div class="text-center bg-success text-white">ORDENES INDIVIDUALES</div>
 <table class="table border border-success ">
 
+    
     <tr class="">
         <th>#</th>
         <th>Codigo</th>

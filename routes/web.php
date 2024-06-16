@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CursosController;
 use App\Http\Controllers\UsuariosController;
+use App\Http\Controllers\EstudiantesController;
 use App\Http\Controllers\GeneraOrdenesController;
 use App\Http\Controllers\PensionesController;
 
@@ -42,10 +43,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/actualizar/{id}', [UsuariosController::class, 'actualizar'])->name('actualizar');
     Route::POST('/cambiar_password/{id}', [UsuariosController::class, 'cambiar_password'])->name('cambiar_password');
     
+    Route::resource('estudiantes',EstudiantesController::class);
+    Route::get('/buscar_estudiantes', [EstudiantesController::class, 'buscar'])->name('buscar_estudiantes');
+
     Route::resource('ordenes', GeneraOrdenesController::class);
     Route::get('/generar_ordenes',[GeneraOrdenesController::Class,'index'])->name('genera_ordenes.index'); 
     Route::post('/generarOrdenes',[GeneraOrdenesController::Class,'generarOrdenes'])->name('generarOrdenes'); 
     Route::post('/eliminarOrden', [GeneraOrdenesController::class, 'eliminarOrden'])->name('eliminarOrden');
+    Route::get('/buscar_estudiante_orden', [GeneraOrdenesController::class, 'buscar_estudiante_orden'])->name('buscar_estudiante_orden');
 
     Route::get('/genera_ordenes.show/{secuencial}',[GeneraOrdenesController::class, 'show'])->name('genera_ordenes.show');
     Route::get('/genera_ordenes.xls/{secuencial}',[GeneraOrdenesController::class, 'genera_xls'])->name('genera_ordenes.xls');
@@ -56,6 +61,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/genera_ordenes.upload_file',[GeneraOrdenesController::class, 'upload_file'])->name('genera_ordenes.upload_file');
 
     Route::get('/genera_ordenes.upload_show/{sec}',[GeneraOrdenesController::class, 'upload_show'])->name('genera_ordenes.upload_show');
+    Route::get('/genera_ordenes.delete/{sec}',[GeneraOrdenesController::class, 'delete'])->name('genera_ordenes.delete');
 
     Route::get('/genera_ordenes.report',[GeneraOrdenesController::class, 'report'])->name('genera_ordenes.report');
     Route::post('/genera_ordenes.report',[GeneraOrdenesController::class, 'report'])->name('genera_ordenes.report');

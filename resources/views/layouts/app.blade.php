@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 2 | Dashboard</title>
+    <title>System Andy | </title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />    <!-- Bootstrap 3.3.5 -->
@@ -42,7 +42,7 @@
 
       <header class="main-header">
         <!-- Logo -->
-        <a href="index2.html" class="logo">
+        <a href="{{ route('dashboard') }}" class="logo" >
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><b>S</b>AD</span>
           <!-- logo for regular state and mobile devices -->
@@ -141,7 +141,8 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="{{ route('usuarios.index') }}"><i class="fa fa-circle-o"></i> Gestionar</a></li>
+                <li><a href="{{ route('usuarios.index') }}"><i class="fa fa-circle-o"></i> Usuarios del Sistema</a></li>
+                <li><a href="{{ route('estudiantes.index') }}"><i class="fa fa-circle-o"></i> Estudiantes</a></li>
               </ul>
             </li>
             {{-- <li class="treeview">
@@ -260,18 +261,19 @@
       </aside>
 
       <!-- Content Wrapper. Contains page content -->
-      <div class="content-wrapper">
+      <div class="content-wrapper ">
           <!-- Content Header (Page header) -->
           <!-- Main content -->
-          <section class="content">
+          <section class="content ">
             @yield('content')
+            
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
       <footer class="main-footer">
         <div class="pull-right hidden-xs">
-          <b>Version</b> 2.3.0
+          <b>Version</b> 1.1.0
         </div>
-        <strong>Copyright &copy; 2014-2015 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights reserved.
+        <strong>Copyright &copy; 2023-2024 <a href="https://www.fundacionvidanueva.org.ec/">Unidad Educativa Técnica Vida Nueva</a>.</strong> All rights reserved.
       </footer>
 
     <!-- jQuery 2.1.4 -->
